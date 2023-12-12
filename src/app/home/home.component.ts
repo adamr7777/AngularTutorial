@@ -35,8 +35,11 @@ export class HomeComponent {
   filteredLocationList: HousingLocation[] = []
 
   constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocations()
-    this.filteredLocationList = this.housingLocationList;
+    this.housingService.getAllHousingLocations()
+      .then((housingLocations)=> {
+        this.housingLocationList = housingLocations
+        this.filteredLocationList = this.housingLocationList
+      })
   }
 
   searchLocation(input: String) {
@@ -44,7 +47,7 @@ export class HomeComponent {
       this.filteredLocationList = this.housingLocationList 
       return
     } 
-    
+
     this.filteredLocationList = this.housingLocationList.filter((location)=> location?.city.toLowerCase().includes(input.toLowerCase()))
   }
 
